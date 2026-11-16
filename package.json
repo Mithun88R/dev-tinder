@@ -1,0 +1,20 @@
+{
+  "name": "devtinder-server",
+  "version": "1.0.0",
+  "description": "tinder for developers",
+  "keywords": [
+    "Nodejs",
+    "Javascript"
+  ],
+  "license": "ISC",
+  "author": "Mithun R",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.jss"
+  },
+  "dependencies": {
+    "express": "^5.3.0"
+  }
+}
