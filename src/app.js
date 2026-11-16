@@ -9,6 +9,10 @@ app.get("/admin/alldatas", (req, res) => {
   res.send("get all data");
 });
 
+app.get("/user/login", (req, res) => {
+  res.send("user Logged in successfully");
+});
+
 // this will only handle get call to /user if /user?userId=100 then use req.query and get { userId: '100' }
 app.get("/user", authUser, (req, res) => {
   res.send("get user data");
