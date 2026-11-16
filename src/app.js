@@ -2,8 +2,15 @@ const express = require("express");
 
 const app = express();
 
-// this will only handle get call to /user
+// this will only handle get call to /user if /user?userId=100 then use req.query and get { userId: '100' }
 app.get("/user", (req, res) => {
+  console.log(req.query);
+  res.send({ firstName: "Mithun", lastName: "R" });
+});
+
+// this will only handle get call to /user/: by id /: means dynamic route
+app.get("/user/:userId", (req, res) => {
+  console.log(req.params);
   res.send({ firstName: "Mithun", lastName: "R" });
 });
 
