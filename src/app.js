@@ -17,6 +17,48 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.get("/getallusers", async (req, res) => {
+  try {
+    const users = await userModel.find({});
+    if (users.length === 0) {
+      res.status(404).send("No users found");
+    } else {
+      res.send(users);
+    }
+  } catch (err) {
+    res.status(401).send("Couldnt find user" + err.message);
+  }
+});
+
+app.get("/user", async (req, res) => {
+  cons;
+  const userEmail = req.body.emailId;
+  console.log(userEmail);
+  try {
+    const user = await userModel.findOne({ emailId: userEmail });
+    if (user.length === 0) {
+      res.status(404).send("User Not Found");
+    } else {
+      res.send(user);
+    }
+  } catch (err) {
+    res.status(401).send("Couldnt find user");
+  }
+});
+
+app.patch("/user", async (req, res) => {
+  const data = req.body;
+  console.log(data);
+  try {
+    await userModel.findOneAndUpdate({ _id: data.userId }, data, {
+      runValidators: true,
+    });
+    res.send("Data updated successfully");
+  } catch (err) {
+    res.status(401).send("Something Went Wrong" + err);
+  }
+});
+
 connectDB()
   .then(() => {
     console.log("DataBase Connected Successfully");
