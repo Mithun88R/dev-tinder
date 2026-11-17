@@ -1,23 +1,34 @@
 const express = require("express");
+const { connectDB } = require("./config/database");
+const userModel = require("./models/user");
 
 const app = express();
-const { authAdmin, authUser } = require("./middleware/auth");
 
-app.use("/admin", authAdmin);
+app.post("/signup", async (req, res) => {
+  const userObj = {
+    firstName: "Pranav",
+    lastName: "M",
+    emailId: "pranavm@gmail.com",
+    password: "12345678",
+  };
 
-app.get("/admin/alldatas", (req, res) => {
-  res.send("get all data");
+  // creating a new instance of  an user Model
+  const user = new userModel(userObj);
+  try {
+    await user.save();
+    res.send("User Signed up successfully");
+  } catch (err) {
+    res.status(400).send("Error message send to user" + err.message);
+  }
 });
 
-app.get("/user/login", (req, res) => {
-  res.send("user Logged in successfully");
-});
-
-// this will only handle get call to /user if /user?userId=100 then use req.query and get { userId: '100' }
-app.get("/user", authUser, (req, res) => {
-  res.send("get user data");
-});
-
-app.listen(5555, () => {
-  console.log("Server is running successfully in port 5555");
-});
+connectDB()
+  .then(() => {
+    console.log("DataBase Connected Successfully");
+    app.listen(5555, () => {
+      console.log("Server is running successfully in port 5555");
+    });
+  })
+  .catch((err) => {
+    console.error("DataBase Cannot be connected");
+  });
