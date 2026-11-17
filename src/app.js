@@ -48,8 +48,12 @@ app.get("/user", async (req, res) => {
 
 app.patch("/user", async (req, res) => {
   const data = req.body;
+
   console.log(data);
   try {
+    if (data?.skills?.length > 10) {
+      throw new Error("Skills length should not be greater than 10");
+    }
     await userModel.findOneAndUpdate({ _id: data.userId }, data, {
       runValidators: true,
     });
