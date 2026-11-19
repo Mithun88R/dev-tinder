@@ -8,7 +8,7 @@ const authUser = async (req, res, next) => {
     if (!token) {
       throw new Error("Invalid Token");
     }
-    console.log("jwt_code", process.env.JWT_SECRET_CODE);
+    // console.log("jwt_code", process.env.JWT_SECRET_CODE);
     const decodedObj = await jwt.verify(token, "$devTinder$");
 
     if (!decodedObj) {
